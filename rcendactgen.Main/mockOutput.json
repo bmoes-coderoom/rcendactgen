@@ -1,0 +1,59 @@
+{
+    "processStartActivities":[
+        {
+            "startTime": "20220720150000",
+            "userName": "someuser",
+            "processName": "terminal",
+            "processCommandLine": "ls",
+            "processId": 1001
+        }
+    ] ,
+    "fileActivities": [
+        {
+            "activityDescriptor": "create",
+            "timestamp": "2022-07-20T15:00:01.101Z",
+            "absolutePath": "/Users/bitasememboe/FileAct/someFile.txt",
+            "username": "someuser",
+            "processName": "someProcess",
+            "processCommandLine": "cmd",
+            "processId": 1002
+        },
+        {
+            "activityDescriptor": "modified",
+            "timestamp": "2022-07-20T16:00:02.202Z",
+            "absolutePath": "/Users/bitasememboe/FileAct/someFile.txt",
+            "username": "someuser",
+            "processName": "someProcess",
+            "processCommandLine": "cmd",
+            "processId": 1003
+        },
+        {
+            "activityDescriptor": "delete",
+            "timestamp": "2022-07-20T17:00:03.303Z",
+            "absolutePath": "/Users/bitasememboe/FileAct/someFile.txt",
+            "username": "someuser",
+            "processName": "someProcess",
+            "processCommandLine": "cmd",
+            "processId": 1004
+        }
+    ],
+    "networkActivities":[
+        {
+            "timestamp": "20220720150000",
+            "username": "someuser",
+            "destination": {
+                "address": "https://www.google.com",
+                "port": 443
+            },
+            "source": {
+                "address": "https://example.com",
+                "port": 443
+            },
+            "amountOfDataSent": "1024",
+            "protocolOfDataSent": "tcp",
+            "processName": "safari",
+            "processCommandLine": "cmd",
+            "processId": 1005
+        }
+    ] 
+}
