@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rcendactgen.Business", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rcendactgen.Main", "src\rcendactgen.Main\rcendactgen.Main.csproj", "{721D59FB-5706-4C78-AACA-02C5021D5448}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rcendactgen.tests", "tests\rcendactgen.tests\rcendactgen.tests\rcendactgen.tests.csproj", "{2407D644-E228-44F4-B42A-E1B322ADB2C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{721D59FB-5706-4C78-AACA-02C5021D5448}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{721D59FB-5706-4C78-AACA-02C5021D5448}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{721D59FB-5706-4C78-AACA-02C5021D5448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2407D644-E228-44F4-B42A-E1B322ADB2C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2407D644-E228-44F4-B42A-E1B322ADB2C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2407D644-E228-44F4-B42A-E1B322ADB2C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2407D644-E228-44F4-B42A-E1B322ADB2C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,5 +55,6 @@ Global
 		{614E33C5-FDC4-495C-8010-F8418512A56F} = {725EE895-00E0-4354-9345-6089B543BD4A}
 		{97E52AD5-07A6-4000-A493-FD7B32AD38EF} = {725EE895-00E0-4354-9345-6089B543BD4A}
 		{721D59FB-5706-4C78-AACA-02C5021D5448} = {725EE895-00E0-4354-9345-6089B543BD4A}
+		{2407D644-E228-44F4-B42A-E1B322ADB2C9} = {C5512B51-76AC-4AA0-AC2C-D3A29221274F}
 	EndGlobalSection
 EndGlobal
