@@ -4,7 +4,7 @@ using rcendactgen.Models;
 
 namespace rcendactgen.Business;
 
-public class LogManager
+public class LogManager : ILogManager
 {
     private readonly ILogger _logger;
     private static LogRecord _logRecord = new LogRecord();
@@ -12,11 +12,13 @@ public class LogManager
     public LogManager(ILogger logger)
     {
         _logger = logger;
+        CreateLog();
     }
 
     public LogManager()
     {
         _logger = new Logger();
+        CreateLog();
     }
 
     public void WriteLog<T>(T obj)
@@ -38,9 +40,9 @@ public class LogManager
             _logRecord.NetworkActivities.Add(networkActivity);
         }
         _logger.WriteToLog(_logRecord);
-        WriteToConsole();
+        //WriteToConsole();
     }
-    public void CreateLog()
+    private void CreateLog()
     {
         _logger.CreateFile();
     }
