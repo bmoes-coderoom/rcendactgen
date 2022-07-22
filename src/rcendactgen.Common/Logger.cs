@@ -4,7 +4,7 @@ namespace rcendactgen.Common;
 
 public class Logger : ILogger
 {
-    private static readonly string absoluteFilePath = Globals.ABSOLUTE_FILEPATH;
+    private static readonly string absoluteFilePath = Globals.ACTIVITYLOG_ABSOLUTE_FILEPATH;
     public void WriteToLog<T>(T obj)
     {
         try

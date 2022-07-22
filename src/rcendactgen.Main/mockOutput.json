@@ -12,7 +12,7 @@
         {
             "activityDescriptor": "create",
             "timestamp": "2022-07-20T15:00:01.101Z",
-            "absolutePath": "/Users/bitasememboe/FileAct/someFile.txt",
+            "fileFullPath": "/Users/bitasememboe/FileAct/someFile.txt",
             "username": "someuser",
             "processName": "someProcess",
             "processCommandLine": "cmd",
@@ -21,7 +21,7 @@
         {
             "activityDescriptor": "modified",
             "timestamp": "2022-07-20T16:00:02.202Z",
-            "absolutePath": "/Users/bitasememboe/FileAct/someFile.txt",
+            "fileFullPath": "/Users/bitasememboe/FileAct/someFile.txt",
             "username": "someuser",
             "processName": "someProcess",
             "processCommandLine": "cmd",
@@ -30,7 +30,7 @@
         {
             "activityDescriptor": "delete",
             "timestamp": "2022-07-20T17:00:03.303Z",
-            "absolutePath": "/Users/bitasememboe/FileAct/someFile.txt",
+            "fileFullPath": "/Users/bitasememboe/FileAct/someFile.txt",
             "username": "someuser",
             "processName": "someProcess",
             "processCommandLine": "cmd",
