@@ -43,7 +43,7 @@ public class FileManager
 
     private void CreateFile(string? absPath)
     {
-        var proc = _processWrapper.GetCurrentProcess();
+        var proc = _processWrapper.GetCurrentProcess(true);
         _fileWrapper.Create(absPath);
         FileActivity activity = new FileActivity
         {
@@ -60,7 +60,7 @@ public class FileManager
     
     private void ModifyFile()
     {
-        var proc = _processWrapper.GetCurrentProcess();
+        var proc = _processWrapper.GetCurrentProcess(true);
         _fileWrapper.WriteAllText(Globals.MODIFYFILE_ABSOLUTE_FILEPATH, "This file was modified");
         FileActivity activity = new FileActivity
         {
@@ -77,7 +77,7 @@ public class FileManager
     
     private void DeleteFile()
     {
-        var proc = _processWrapper.GetCurrentProcess();
+        var proc = _processWrapper.GetCurrentProcess(true);
         _fileWrapper.Delete(Globals.DELETEFILE_ABSOLUTE_FILEPATH);
         FileActivity activity = new FileActivity
         {

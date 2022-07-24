@@ -25,7 +25,7 @@ public class FileManagerTests
         };
         var expectedDtString = expectedDateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         mockProcessWrapper
-            .Setup(x => x.GetCurrentProcess())
+            .Setup(x => x.GetCurrentProcess(true))
             .Returns(procWrapModel);
         var mockFileWrapper = new Mock<IFileWrapper>();
         mockFileWrapper
@@ -72,7 +72,7 @@ public class FileManagerTests
         };
         var expectedDtString = expectedDateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         mockProcessWrapper
-            .Setup(x => x.GetCurrentProcess())
+            .Setup(x => x.GetCurrentProcess(true))
             .Returns(procWrapModel);
         var mockFileWrapper = new Mock<IFileWrapper>();
         mockFileWrapper
@@ -119,7 +119,7 @@ public class FileManagerTests
         };
         var expectedDtString = expectedDateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         mockProcessWrapper
-            .Setup(x => x.GetCurrentProcess())
+            .Setup(x => x.GetCurrentProcess(true))
             .Returns(procWrapModel);
         var mockFileWrapper = new Mock<IFileWrapper>();
         mockFileWrapper
