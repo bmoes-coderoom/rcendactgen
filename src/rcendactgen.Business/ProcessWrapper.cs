@@ -15,4 +15,15 @@ public class ProcessWrapper : IProcessWrapper
             StartTime = proc.StartTime
         };
     }
+
+    public ProcessWrapperModel GetCurrentProcess()
+    {
+        var proc = Process.GetCurrentProcess();
+        return new ProcessWrapperModel
+        {
+            Id = proc.Id,
+            ProcessName = proc.ProcessName,
+            StartTime = proc.StartTime
+        };
+    }
 }

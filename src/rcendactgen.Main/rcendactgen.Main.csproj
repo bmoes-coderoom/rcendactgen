@@ -12,6 +12,10 @@
     <Content Include="mockOutput.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Remove="ProgramData\.dummyfile" />
+    <Content Include="ProgramData\.dummyfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

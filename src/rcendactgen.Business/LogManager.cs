@@ -40,7 +40,7 @@ public class LogManager : ILogManager
             _logRecord.NetworkActivities.Add(networkActivity);
         }
         _logger.WriteToLog(_logRecord);
-        //WriteToConsole();
+        WriteToConsole();
     }
     private void CreateLog()
     {
