@@ -8,17 +8,20 @@ public class FileManager
 {
     private readonly ILogManager _logManager;
     private readonly IProcessWrapper _processWrapper;
+    private readonly IFileWrapper _fileWrapper;
 
-    public FileManager(ILogManager logManager, IProcessWrapper processWrapper)
+    public FileManager(ILogManager logManager, IProcessWrapper processWrapper, IFileWrapper fileWrapper)
     {
         _logManager = logManager;
         _processWrapper = processWrapper;
+        _fileWrapper = fileWrapper;
     }
 
     public FileManager()
     {
         _logManager = new LogManager();
         _processWrapper = new ProcessWrapper();
+        _fileWrapper = new FileWrapper();
     }
 
     public void DoFileAction(string fileAction, string? absPath = null)
@@ -41,7 +44,7 @@ public class FileManager
     private void CreateFile(string? absPath)
     {
         var proc = _processWrapper.GetCurrentProcess();
-        File.Create(absPath);
+        _fileWrapper.Create(absPath);
         FileActivity activity = new FileActivity
         {
             ActivityDescriptor = "create",
@@ -58,7 +61,7 @@ public class FileManager
     private void ModifyFile()
     {
         var proc = _processWrapper.GetCurrentProcess();
-        File.WriteAllText(Globals.MODIFYFILE_ABSOLUTE_FILEPATH, "This file was modified");
+        _fileWrapper.WriteAllText(Globals.MODIFYFILE_ABSOLUTE_FILEPATH, "This file was modified");
         FileActivity activity = new FileActivity
         {
             ActivityDescriptor = "modified",
@@ -75,7 +78,7 @@ public class FileManager
     private void DeleteFile()
     {
         var proc = _processWrapper.GetCurrentProcess();
-        File.Delete(Globals.DELETEFILE_ABSOLUTE_FILEPATH);
+        _fileWrapper.Delete(Globals.DELETEFILE_ABSOLUTE_FILEPATH);
         FileActivity activity = new FileActivity
         {
             ActivityDescriptor = "delete",

@@ -1,6 +1,6 @@
 namespace rcendactgen.Common;
 
-public class FileWrapper
+public class FileWrapper : IFileWrapper
 {
     public FileStream Create(string path)
     {

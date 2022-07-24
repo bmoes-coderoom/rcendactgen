@@ -16,6 +16,7 @@ public class ProcessManagerTests
     [InlineData("/Users/someuser/App/bin/Release/net6.0/osx-arm64/DotNet.Docker")]
     public void StartProcess_Should_StartGivenProcess_And_Pass_ProcessStartActivityToLogManager(string fullCommand)
     {
+        // arrange
         var commandArr = fullCommand.Split(" ").ToList();
         string baseCommand = commandArr[0];
         commandArr.Remove(commandArr.First());
@@ -39,7 +40,11 @@ public class ProcessManagerTests
             .Setup(x => x.WriteLog(It.IsAny<ProcessStartActivity>()))
             .Callback((ProcessStartActivity act) => processStartActivity = act )
             .Verifiable();
+        
+        // act
         new ProcessManager(mockLogManager.Object, mockProcessWrapper.Object).StartProcess(fullCommand);
+        
+        // assert
         mockLogManager.Verify();
         mockProcessWrapper.Verify();
         processStartActivity.Should().NotBeNull();
