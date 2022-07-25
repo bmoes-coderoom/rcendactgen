@@ -1,3 +1,4 @@
+using System.Reflection;
 using rcendactgen.Common;
 
 namespace rcendactgen.Main;
@@ -8,11 +9,12 @@ public static class DataPrepper
     private static string relativePathDelete = "ProgramData/delete_file.txt";
     public static void PrepareProgramData()
     {
+        Globals.EXE_DIR = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         try
         {
-            File.WriteAllText($"{AppDomain.CurrentDomain.BaseDirectory}{relativePathModify}", "");
-            File.WriteAllText($"{AppDomain.CurrentDomain.BaseDirectory}{relativePathDelete}", "");
-            UpdateGlobals();
+            File.WriteAllText($"{Globals.EXE_DIR}/{relativePathModify}", "");
+            File.WriteAllText($"{Globals.EXE_DIR}/{relativePathDelete}", "");
+            UpdateProgramDataGlobals();
         }
         catch (Exception)
         {
@@ -23,9 +25,9 @@ Please check that you have proper permissions in the program's directory and res
 
     }
 
-    private static void UpdateGlobals()
+    private static void UpdateProgramDataGlobals()
     {
-        Globals.MODIFYFILE_ABSOLUTE_FILEPATH = Path.GetFullPath(relativePathModify);
-        Globals.DELETEFILE_ABSOLUTE_FILEPATH = Path.GetFullPath(relativePathDelete);
+        Globals.MODIFYFILE_ABSOLUTE_FILEPATH = $"{Globals.EXE_DIR}/{relativePathModify}";
+        Globals.DELETEFILE_ABSOLUTE_FILEPATH = $"{Globals.EXE_DIR}/{relativePathDelete}";
     }
 }
