@@ -4,7 +4,7 @@ namespace rcendactgen.Common;
 
 public class Logger : ILogger
 {
-    private static readonly string activityLogDir = $"{AppDomain.CurrentDomain.BaseDirectory}activitylogs";
+    private static readonly string activityLogDir = $"{Globals.EXE_DIR}/activitylogs";
     private static readonly string absoluteFilePath = $"{activityLogDir}/activitylog_{DateTime.Now.ToString("yyyyMMddHHmmss")}.json";
     public void WriteToLog<T>(T obj)
     {
