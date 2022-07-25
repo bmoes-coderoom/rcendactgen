@@ -1,5 +1,6 @@
 using System.Text;
 using Newtonsoft.Json;
+using rcendactgen.Common;
 using rcendactgen.Models;
 
 namespace rcendactgen.Business;
@@ -67,7 +68,7 @@ The current activity will not be logged to the activity log", ex);
                 },
                 AmountOfDataSent = (await content.ReadAsByteArrayAsync()).Length,
                 ProtocolOfDataSent = "tcp",
-                Username = Environment.UserName,
+                Username = CurrentUserInfo.GetCurrentUserWithDomain(),
                 ProcessName = proc.ProcessName,
                 ProcessCommandLine = Environment.CommandLine,
                 ProcessId = proc.Id

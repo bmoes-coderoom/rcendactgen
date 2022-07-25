@@ -1,3 +1,4 @@
+using rcendactgen.Common;
 using rcendactgen.Models;
 
 namespace rcendactgen.Business;
@@ -41,7 +42,7 @@ The current activity will not be logged to the activity log", ex);
             {
                 ProcessId = proc.Id,
                 ProcessName = proc.ProcessName,
-                UserName = Environment.UserName,
+                UserName = CurrentUserInfo.GetCurrentUserWithDomain(),
                 ProcessCommandLine = fullCommand,
                 StartTime = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
             };

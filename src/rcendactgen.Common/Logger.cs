@@ -5,6 +5,7 @@ namespace rcendactgen.Common;
 public class Logger : ILogger
 {
     private static readonly string absoluteFilePath = Globals.ACTIVITYLOG_ABSOLUTE_FILEPATH;
+    private static readonly string activityLogDir = Globals.ACTIVITYLOG_DIRECTORY;
     public void WriteToLog<T>(T obj)
     {
         try
@@ -34,9 +35,25 @@ public class Logger : ILogger
 
     public void CreateFile()
     {
-        if (!File.Exists(absoluteFilePath))
+        try
         {
-            File.WriteAllText(absoluteFilePath, "");
+            if (!Directory.Exists(activityLogDir))
+            {
+                Directory.CreateDirectory(activityLogDir);
+            }
+
+            if (!File.Exists(absoluteFilePath))
+            {
+                File.WriteAllText(absoluteFilePath, "");
+            }
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine(@$"There was an error creating the file structure for the activity log.
+You may experience integrity issues with logging.
+Please verify you have proper access rights in the current directory and that there is enough disk space.
+The available exception is: {ex.Message}");
+        }
+
     }
 }
