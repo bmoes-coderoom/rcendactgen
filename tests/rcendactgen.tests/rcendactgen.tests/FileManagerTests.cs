@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Moq;
@@ -76,7 +75,6 @@ public class FileManagerTests
             ProcessName = "name",
             StartTime = expectedDateTime
         };
-        var expectedDtString = expectedDateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         mockProcessWrapper
             .Setup(x => x.GetCurrentProcess(true))
             .Returns(procWrapModel);
