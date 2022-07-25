@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <!-- This Invariant setting is needed so that some linux users don't have to set environment flags -->
+  <PropertyGroup>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Remove="mockOutput.json" />

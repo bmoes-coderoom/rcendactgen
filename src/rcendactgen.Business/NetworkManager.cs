@@ -28,7 +28,7 @@ public class NetworkManager
     public async Task TransmitDataAsync()
     {
         ProcessWrapperModel proc = null;
-        string requestUri = "https://jsonplaceholder.typicode.com/posts";
+        string requestUri = "http://jsonplaceholder.typicode.com/posts";
         StringContent content = null;
         try
         {
@@ -59,12 +59,12 @@ The current activity will not be logged to the activity log", ex);
                 Destination = new AddressAndPort
                 {
                     Address = requestUri,
-                    Port = 443
+                    Port = 80
                 },
                 Source = new AddressAndPort
                 {
                     Address = System.Net.Dns.GetHostName(),
-                    Port = 443
+                    Port = 80
                 },
                 AmountOfDataSent = (await content.ReadAsByteArrayAsync()).Length,
                 ProtocolOfDataSent = "tcp",
