@@ -10,22 +10,25 @@ Globals.ACTIVITYLOG_ABSOLUTE_FILEPATH = $"activitylog_{DateTime.Now.ToString("dd
 Console.WriteLine(Globals.ACTIVITYLOG_ABSOLUTE_FILEPATH);
 var processManager = new ProcessManager();
 var fileManager = new FileManager();
+var networkManager = new NetworkManager();
 
-// string input = null;
-// Console.WriteLine("Enter Full Path for Proc Executable with optional arguments");
-// input = Console.ReadLine();
-//
-// processManager.StartProcess(input);
-// Console.WriteLine("Enter Full Path with FileName and extension");
-// input = Console.ReadLine();
-//
-// // /Users/bitasememboe/Projects/rcendactgen/thisnewfile1.txt
-// fileManager.DoFileAction("create",input);
+string input = null;
+Console.WriteLine("Enter Full Path for Proc Executable with optional arguments");
+input = Console.ReadLine();
+
+processManager.StartProcess(input);
+Console.WriteLine("Enter Full Path with FileName and extension");
+input = Console.ReadLine();
+
+// /Users/bitasememboe/Projects/rcendactgen/thisnewfile1.txt
+fileManager.DoFileAction("create",input);
 Console.WriteLine("That is all the input we need." +
                   "Generating activity for file modification and deletion before exiting...");
 fileManager.DoFileAction("modify");
 fileManager.DoFileAction("delete");
-
+await networkManager.TransmitDataAsync();
+Console.WriteLine("DONE");
+Console.ReadLine();
 
 // Console.WriteLine("After Starting Proc");
 // processManager.GetAllProcesses();
