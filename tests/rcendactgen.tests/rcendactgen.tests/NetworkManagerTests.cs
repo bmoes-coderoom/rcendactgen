@@ -65,4 +65,75 @@ public class NetworkManagerTests
             activity.ProtocolOfDataSent.Should().NotBeNullOrEmpty();
         }
     }
+    
+        [Fact]
+    public async Task TransmitDataAsync_Should_LogError_When_SendingData_ThrowsException()
+    {
+        // arrange
+        var mockProcessWrapper = new Mock<IProcessWrapper>();
+        var expectedDateTime = DateTime.Now;
+        var procWrapModel = new ProcessWrapperModel
+        {
+            Id = 1,
+            ProcessName = "name",
+            StartTime = expectedDateTime
+        };
+        var expectedDtString = expectedDateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+        mockProcessWrapper
+            .Setup(x => x.GetCurrentProcess(true))
+            .Returns(procWrapModel);
+        var handler = new Mock<HttpMessageHandler>();
+        handler.SetupAnyRequest()
+            .ThrowsAsync(new Exception());
+        
+        var mockLogManager = new Mock<ILogManager>();
+        mockLogManager
+            .Setup(x => x.WriteError(It.IsAny<string>(), It.IsAny<Exception>()))
+            .Verifiable();
+        
+        // act
+        await new NetworkManager(handler.CreateClient(), mockProcessWrapper.Object, mockLogManager.Object).TransmitDataAsync();
+        
+        // assert
+        mockLogManager.Verify();
+        mockProcessWrapper.Verify();
+    }
+    
+        [Fact]
+    public async Task TransmitDataAsync_Should_LogError_WhenLoggingNetworkActivityFails()
+    {
+        // arrange
+        var mockProcessWrapper = new Mock<IProcessWrapper>();
+        var expectedDateTime = DateTime.Now;
+        var procWrapModel = new ProcessWrapperModel
+        {
+            Id = 1,
+            ProcessName = "name",
+            StartTime = expectedDateTime
+        };
+        var expectedDtString = expectedDateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+        mockProcessWrapper
+            .Setup(x => x.GetCurrentProcess(true))
+            .Returns(procWrapModel);
+        var handler = new Mock<HttpMessageHandler>();
+        handler.SetupAnyRequest()
+            .ReturnsResponse(HttpStatusCode.Accepted);
+        
+        var mockLogManager = new Mock<ILogManager>();
+        var activity = new NetworkActivity();
+        mockLogManager
+            .Setup(x => x.WriteLog(It.IsAny<NetworkActivity>()))
+            .Throws(new Exception())
+            .Verifiable();
+        mockLogManager
+            .Setup(x => x.WriteError(It.IsAny<string>(), It.IsAny<Exception>()))
+            .Verifiable();
+        
+        // act
+        await new NetworkManager(handler.CreateClient(), mockProcessWrapper.Object, mockLogManager.Object).TransmitDataAsync();
+        
+        // assert
+        mockLogManager.Verify();
+        mockProcessWrapper.Verify();
+    }
 }

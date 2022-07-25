@@ -26,38 +26,59 @@ public class NetworkManager
 
     public async Task TransmitDataAsync()
     {
-        var proc = _processWrapper.GetCurrentProcess(true);
-        var post = new Post
-        {
-            Title = "foo",
-            Body = "bar",
-            UserId = 1
-        };
+        ProcessWrapperModel proc = null;
         string requestUri = "https://jsonplaceholder.typicode.com/posts";
-        var strBody = JsonConvert.SerializeObject(post);
-        var content = new StringContent(strBody, Encoding.UTF8);
-        await _client.PostAsync(requestUri, content);
-        NetworkActivity activity = new NetworkActivity
+        StringContent content = null;
+        try
         {
-            Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
-            Destination = new AddressAndPort
+            proc = _processWrapper.GetCurrentProcess(true);
+            var post = new Post
             {
-                Address = requestUri,
-                Port = 443
-            },
-            Source = new AddressAndPort
+                Title = "foo",
+                Body = "bar",
+                UserId = 1
+            };
+
+            var strBody = JsonConvert.SerializeObject(post);
+            content = new StringContent(strBody, Encoding.UTF8);
+            await _client.PostAsync(requestUri, content);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error transmitting data.
+The current activity will not be logged to the activity log", ex);
+            return;
+        }
+
+        try
+        {
+            NetworkActivity activity = new NetworkActivity
             {
-                Address = System.Net.Dns.GetHostName(),
-                Port = 443
-            },
-            AmountOfDataSent = (await content.ReadAsByteArrayAsync()).Length,
-            ProtocolOfDataSent = "tcp",
-            Username = Environment.UserName,
-            ProcessName = proc.ProcessName,
-            ProcessCommandLine = Environment.CommandLine,
-            ProcessId = proc.Id
-        };
-        _logManager.WriteLog(activity);
+                Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+                Destination = new AddressAndPort
+                {
+                    Address = requestUri,
+                    Port = 443
+                },
+                Source = new AddressAndPort
+                {
+                    Address = System.Net.Dns.GetHostName(),
+                    Port = 443
+                },
+                AmountOfDataSent = (await content.ReadAsByteArrayAsync()).Length,
+                ProtocolOfDataSent = "tcp",
+                Username = Environment.UserName,
+                ProcessName = proc.ProcessName,
+                ProcessCommandLine = Environment.CommandLine,
+                ProcessId = proc.Id
+            };
+            _logManager.WriteLog(activity);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error logging the activity",ex);
+        }
+
     }
 
     class Post

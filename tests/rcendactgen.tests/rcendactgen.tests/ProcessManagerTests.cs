@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -56,5 +57,70 @@ public class ProcessManagerTests
             processStartActivity.ProcessCommandLine.Should().Be(fullCommand);
             processStartActivity.StartTime.Should().Be(expectedDTString);
         }
+    }
+    
+    [Fact]
+    public void StartProcess_Should_LogError_WhenAnErrorOccursWhileStartingAProcess()
+    {
+        // arrange
+        string fullCommand = "ls -0";
+        var commandArr = fullCommand.Split(" ").ToList();
+        string baseCommand = commandArr[0];
+        commandArr.Remove(commandArr.First());
+        string args = string.Join(" ", commandArr);
+        var mockProcessWrapper = new Mock<IProcessWrapper>();
+        var exception = new Exception("Invalid arguments passed");
+        mockProcessWrapper
+            .Setup(x => x.Start(baseCommand, args))
+            .Throws(exception)
+            .Verifiable();
+        var mockLogManager = new Mock<ILogManager>();
+        mockLogManager
+            .Setup(x => x.WriteError(It.IsAny<string>(), It.IsAny<Exception>()))
+            .Verifiable();
+
+        // act
+        new ProcessManager(mockLogManager.Object, mockProcessWrapper.Object).StartProcess(fullCommand);
+        // assert
+        mockProcessWrapper.Verify();
+        mockLogManager.Verify();
+    }
+    
+    [Fact]
+    public void StartProcess_Should_LogError_WhenAnErrorOccursLoggingActivity()
+    {
+        // arrange
+        string fullCommand = "/Users/someuser/App/bin/Release/net6.0/osx-arm64/DotNet.Docker";
+        var commandArr = fullCommand.Split(" ").ToList();
+        string baseCommand = commandArr[0];
+        commandArr.Remove(commandArr.First());
+        string args = string.Join(" ", commandArr);
+        var mockLogManager = new Mock<ILogManager>();
+        var mockProcessWrapper = new Mock<IProcessWrapper>();
+        var expectedDateTime = DateTime.Now;
+        var procWrapperModel = new ProcessWrapperModel
+        {
+            Id = 1,
+            ProcessName = "foo",
+            StartTime = expectedDateTime
+        };
+        mockProcessWrapper
+            .Setup(x => x.Start(baseCommand, args))
+            .Returns(procWrapperModel)
+            .Verifiable();
+        var exception = new Exception("logging failed");
+        mockLogManager
+            .Setup(x => x.WriteLog(It.IsAny<ProcessStartActivity>()))
+            .Throws(exception)
+            .Verifiable();
+        mockLogManager
+            .Setup(x => x.WriteError(It.IsAny<string>(), It.IsAny<Exception>()))
+            .Verifiable();
+        
+        // act
+        new ProcessManager(mockLogManager.Object, mockProcessWrapper.Object).StartProcess(fullCommand);
+        // assert
+        mockLogManager.Verify();
+        mockProcessWrapper.Verify();
     }
 }
