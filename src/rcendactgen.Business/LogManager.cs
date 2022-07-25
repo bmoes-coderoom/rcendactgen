@@ -42,6 +42,11 @@ public class LogManager : ILogManager
         _logger.WriteToLog(_logRecord);
         WriteToConsole();
     }
+
+    public void WriteError(string message, Exception ex)
+    {
+        Console.WriteLine(@$"{message}. This is the available error: {ex.Message}");
+    }
     private void CreateLog()
     {
         _logger.CreateFile();

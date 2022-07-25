@@ -20,21 +20,36 @@ public class ProcessManager
     }
     public void StartProcess(string fullCommand)
     {
-        var commandArr = fullCommand.Split(" ").ToList();
-        string baseCommand = commandArr[0];
-        commandArr.Remove(commandArr.First());
-        string args = string.Join(" ", commandArr);
-        var proc = _processWrapper.Start(baseCommand, args);
-        
-        ProcessStartActivity activity = new ProcessStartActivity
+        ProcessWrapperModel proc = null;
+        try
         {
-            ProcessId = proc.Id,
-            ProcessName = proc.ProcessName,
-            UserName = Environment.UserName,
-            ProcessCommandLine = fullCommand,
-            StartTime = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-        };
-        _logManager.WriteLog(activity);
-
+            var commandArr = fullCommand.Split(" ").ToList();
+            string baseCommand = commandArr[0];
+            commandArr.Remove(commandArr.First());
+            string args = string.Join(" ", commandArr);
+            proc = _processWrapper.Start(baseCommand, args);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error starting the process.
+The current activity will not be logged to the activity log", ex);
+            return;
+        }
+        try
+        {
+            ProcessStartActivity activity = new ProcessStartActivity
+            {
+                ProcessId = proc.Id,
+                ProcessName = proc.ProcessName,
+                UserName = Environment.UserName,
+                ProcessCommandLine = fullCommand,
+                StartTime = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+            };
+            _logManager.WriteLog(activity);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error logging the activity", ex);
+        }
     }
 }

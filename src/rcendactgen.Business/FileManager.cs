@@ -43,52 +43,108 @@ public class FileManager
 
     private void CreateFile(string? absPath)
     {
-        var proc = _processWrapper.GetCurrentProcess(true);
-        _fileWrapper.Create(absPath);
-        FileActivity activity = new FileActivity
+        ProcessWrapperModel proc = null;
+        try
         {
-            ActivityDescriptor = "create",
-            Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
-            FileFullPath = absPath,
-            UserName = Environment.UserName,
-            ProcessName = proc.ProcessName,
-            ProcessCommandLine = Environment.CommandLine,
-            ProcessId = proc.Id
-        };
-        _logManager.WriteLog(activity);
+            proc = _processWrapper.GetCurrentProcess(true);
+            _fileWrapper.Create(absPath);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error creating the file.
+The current activity will not be logged to the activity log", ex);
+            return;
+        }
+
+        try
+        {
+            FileActivity activity = new FileActivity
+            {
+                ActivityDescriptor = "create",
+                Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+                FileFullPath = absPath,
+                UserName = Environment.UserName,
+                ProcessName = proc.ProcessName,
+                ProcessCommandLine = Environment.CommandLine,
+                ProcessId = proc.Id
+            };
+            _logManager.WriteLog(activity);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error logging the activity", ex);
+        }
+
     }
     
     private void ModifyFile()
     {
-        var proc = _processWrapper.GetCurrentProcess(true);
-        _fileWrapper.WriteAllText(Globals.MODIFYFILE_ABSOLUTE_FILEPATH, "This file was modified");
-        FileActivity activity = new FileActivity
+        ProcessWrapperModel proc = null;
+        try
         {
-            ActivityDescriptor = "modified",
-            Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
-            FileFullPath = Globals.MODIFYFILE_ABSOLUTE_FILEPATH,
-            UserName = Environment.UserName,
-            ProcessName = proc.ProcessName,
-            ProcessCommandLine = Environment.CommandLine,
-            ProcessId = proc.Id
-        };
-        _logManager.WriteLog(activity);
+            proc = _processWrapper.GetCurrentProcess(true);
+            _fileWrapper.WriteAllText(Globals.MODIFYFILE_ABSOLUTE_FILEPATH, "This file was modified");
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error modifying the file.
+The current activity will not be logged to the activity log", ex);
+            return;
+        }
+        
+        try
+        {
+            FileActivity activity = new FileActivity
+            {
+                ActivityDescriptor = "modified",
+                Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+                FileFullPath = Globals.MODIFYFILE_ABSOLUTE_FILEPATH,
+                UserName = Environment.UserName,
+                ProcessName = proc.ProcessName,
+                ProcessCommandLine = Environment.CommandLine,
+                ProcessId = proc.Id
+            };
+            _logManager.WriteLog(activity);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error logging the activity",ex);
+        }
     }
     
     private void DeleteFile()
     {
-        var proc = _processWrapper.GetCurrentProcess(true);
-        _fileWrapper.Delete(Globals.DELETEFILE_ABSOLUTE_FILEPATH);
-        FileActivity activity = new FileActivity
+        ProcessWrapperModel proc = null;
+        try
         {
-            ActivityDescriptor = "delete",
-            Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
-            FileFullPath = Globals.DELETEFILE_ABSOLUTE_FILEPATH,
-            UserName = Environment.UserName,
-            ProcessName = proc.ProcessName,
-            ProcessCommandLine = Environment.CommandLine,
-            ProcessId = proc.Id
-        };
-        _logManager.WriteLog(activity);
+            proc = _processWrapper.GetCurrentProcess(true);
+            _fileWrapper.Delete(Globals.DELETEFILE_ABSOLUTE_FILEPATH);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error deleting the file.
+The current activity will not be logged to the activity log", ex);
+            return;
+        }
+
+
+        try
+        {
+            FileActivity activity = new FileActivity
+            {
+                ActivityDescriptor = "delete",
+                Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+                FileFullPath = Globals.DELETEFILE_ABSOLUTE_FILEPATH,
+                UserName = Environment.UserName,
+                ProcessName = proc.ProcessName,
+                ProcessCommandLine = Environment.CommandLine,
+                ProcessId = proc.Id
+            };
+            _logManager.WriteLog(activity);
+        }
+        catch (Exception ex)
+        {
+            _logManager.WriteError(@"There was an error logging the activity", ex);
+        }
     }
 }
