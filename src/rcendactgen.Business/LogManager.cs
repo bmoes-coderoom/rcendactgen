@@ -40,7 +40,9 @@ public class LogManager : ILogManager
             _logRecord.NetworkActivities.Add(networkActivity);
         }
         _logger.WriteToLog(_logRecord);
+        #if DEBUG
         WriteToConsole();
+        #endif
     }
 
     public void WriteError(string message, Exception ex)

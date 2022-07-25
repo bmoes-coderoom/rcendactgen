@@ -5,7 +5,7 @@ using rcendactgen.Main;
 DataPrepper.PrepareProgramData();
 
 Globals.ACTIVITYLOG_DIRECTORY = "activitylogs";
-Globals.ACTIVITYLOG_ABSOLUTE_FILEPATH = $"{Globals.ACTIVITYLOG_DIRECTORY}/activitylog_{DateTime.Now.ToString("ddMMyyyyHHmmss")}.json";
+Globals.ACTIVITYLOG_ABSOLUTE_FILEPATH = $"{Globals.ACTIVITYLOG_DIRECTORY}/activitylog_{DateTime.Now.ToString("yyyyMMddHHmmss")}.json";
 var processManager = new ProcessManager();
 var fileManager = new FileManager();
 var networkManager = new NetworkManager();
@@ -16,7 +16,8 @@ input = Console.ReadLine();
 
 processManager.StartProcess(input);
 Console.WriteLine(@"Enter Full Path with FileName and extension in order to create a file.
-Afterwards the program will run modify and delete file scenarios on its own generated files");
+Then the program will run modify and delete file scenarios on its own generated files.
+Lastly a network connection will be established to transmit data.");
 input = Console.ReadLine();
 fileManager.DoFileAction("create",input);
 fileManager.DoFileAction("modify");
