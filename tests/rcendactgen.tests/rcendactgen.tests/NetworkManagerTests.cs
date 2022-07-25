@@ -78,7 +78,6 @@ public class NetworkManagerTests
             ProcessName = "name",
             StartTime = expectedDateTime
         };
-        var expectedDtString = expectedDateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         mockProcessWrapper
             .Setup(x => x.GetCurrentProcess(true))
             .Returns(procWrapModel);
@@ -111,7 +110,6 @@ public class NetworkManagerTests
             ProcessName = "name",
             StartTime = expectedDateTime
         };
-        var expectedDtString = expectedDateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         mockProcessWrapper
             .Setup(x => x.GetCurrentProcess(true))
             .Returns(procWrapModel);
@@ -120,7 +118,6 @@ public class NetworkManagerTests
             .ReturnsResponse(HttpStatusCode.Accepted);
         
         var mockLogManager = new Mock<ILogManager>();
-        var activity = new NetworkActivity();
         mockLogManager
             .Setup(x => x.WriteLog(It.IsAny<NetworkActivity>()))
             .Throws(new Exception())
