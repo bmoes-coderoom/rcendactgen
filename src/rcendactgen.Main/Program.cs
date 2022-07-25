@@ -4,8 +4,7 @@ using rcendactgen.Main;
 
 DataPrepper.PrepareProgramData();
 
-Globals.ACTIVITYLOG_DIRECTORY = "activitylogs";
-Globals.ACTIVITYLOG_ABSOLUTE_FILEPATH = $"{Globals.ACTIVITYLOG_DIRECTORY}/activitylog_{DateTime.Now.ToString("yyyyMMddHHmmss")}.json";
+
 var processManager = new ProcessManager();
 var fileManager = new FileManager();
 var networkManager = new NetworkManager();
