@@ -29,8 +29,14 @@ public class FileManagerTests
             .Setup(x => x.GetCurrentProcess(true))
             .Returns(procWrapModel);
         var mockFileWrapper = new Mock<IFileWrapper>();
+        string absPath = "/root/users/someuser/somepath/text.txt";
+        var fileWrapObj = new FileWrapObj
+        {
+            AbsoluteFilePath = absPath
+        };
         mockFileWrapper
             .Setup(x => x.Create(It.IsAny<string>()))
+            .Returns(fileWrapObj)
             .Verifiable();
         var mockLogManager = new Mock<ILogManager>();
         var activity = new FileActivity();
@@ -40,7 +46,7 @@ public class FileManagerTests
             .Verifiable();
         
         // act
-        new FileManager(mockLogManager.Object, mockProcessWrapper.Object, mockFileWrapper.Object).DoFileAction("create", "somePath");
+        new FileManager(mockLogManager.Object, mockProcessWrapper.Object, mockFileWrapper.Object).DoFileAction("create", absPath);
         
         // assert
         mockLogManager.Verify();
@@ -110,8 +116,14 @@ public class FileManagerTests
             .Setup(x => x.GetCurrentProcess(true))
             .Returns(procWrapModel);
         var mockFileWrapper = new Mock<IFileWrapper>();
+        string absPath = "/root/users/someuser/somepath/text.txt";
+        var fileWrapObj = new FileWrapObj
+        {
+            AbsoluteFilePath = absPath
+        };
         mockFileWrapper
             .Setup(x => x.Create(It.IsAny<string>()))
+            .Returns(fileWrapObj)
             .Verifiable();
         var mockLogManager = new Mock<ILogManager>();
         var exception = new Exception("Error while logging activity");
@@ -124,7 +136,7 @@ public class FileManagerTests
             .Verifiable();
         
         // act
-        new FileManager(mockLogManager.Object, mockProcessWrapper.Object, mockFileWrapper.Object).DoFileAction("create", "somePath");
+        new FileManager(mockLogManager.Object, mockProcessWrapper.Object, mockFileWrapper.Object).DoFileAction("create", absPath);
         
         // assert
         mockLogManager.Verify();

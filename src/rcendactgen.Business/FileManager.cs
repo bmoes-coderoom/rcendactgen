@@ -44,10 +44,11 @@ public class FileManager
     private void CreateFile(string? absPath)
     {
         ProcessWrapperModel proc = null;
+        FileWrapObj fileWrapObj = null;
         try
         {
             proc = _processWrapper.GetCurrentProcess(true);
-            _fileWrapper.Create(absPath);
+            fileWrapObj = _fileWrapper.Create(absPath);
         }
         catch (Exception ex)
         {
@@ -62,8 +63,8 @@ The current activity will not be logged to the activity log", ex);
             {
                 ActivityDescriptor = "create",
                 Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
-                FileFullPath = absPath,
-                UserName = Environment.UserName,
+                FileFullPath = fileWrapObj.AbsoluteFilePath,
+                UserName = CurrentUserInfo.GetCurrentUserWithDomain(),
                 ProcessName = proc.ProcessName,
                 ProcessCommandLine = Environment.CommandLine,
                 ProcessId = proc.Id
@@ -99,7 +100,7 @@ The current activity will not be logged to the activity log", ex);
                 ActivityDescriptor = "modified",
                 Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
                 FileFullPath = Globals.MODIFYFILE_ABSOLUTE_FILEPATH,
-                UserName = Environment.UserName,
+                UserName = CurrentUserInfo.GetCurrentUserWithDomain(),
                 ProcessName = proc.ProcessName,
                 ProcessCommandLine = Environment.CommandLine,
                 ProcessId = proc.Id
@@ -135,7 +136,7 @@ The current activity will not be logged to the activity log", ex);
                 ActivityDescriptor = "delete",
                 Timestamp = proc.StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
                 FileFullPath = Globals.DELETEFILE_ABSOLUTE_FILEPATH,
-                UserName = Environment.UserName,
+                UserName = CurrentUserInfo.GetCurrentUserWithDomain(),
                 ProcessName = proc.ProcessName,
                 ProcessCommandLine = Environment.CommandLine,
                 ProcessId = proc.Id

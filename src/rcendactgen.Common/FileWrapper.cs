@@ -2,9 +2,17 @@ namespace rcendactgen.Common;
 
 public class FileWrapper : IFileWrapper
 {
-    public FileStream Create(string path)
+    public FileWrapObj Create(string path)
     {
-        return File.Create(path);
+        FileInfo file = new FileInfo(path);
+        // Creates directory if does not exist
+        file.Directory.Create();
+        File.Create(path);
+        return new FileWrapObj
+        {
+            AbsoluteFilePath = file.FullName
+        
+        };
     }
 
     public void WriteAllText(string path, string content)
