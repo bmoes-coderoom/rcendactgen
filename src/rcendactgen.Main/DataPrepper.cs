@@ -2,7 +2,9 @@ using System.Reflection;
 using rcendactgen.Common;
 
 namespace rcendactgen.Main;
-
+/// <summary>
+/// This class will prepare program data needed for the program to run File modification and deletion scenarios
+/// </summary>
 public static class DataPrepper
 {
     private static string relativePathModify = "ProgramData/modify_file.txt";

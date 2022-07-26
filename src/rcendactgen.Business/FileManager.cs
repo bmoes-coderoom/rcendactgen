@@ -3,6 +3,9 @@ using rcendactgen.Models;
 
 namespace rcendactgen.Business;
 
+/// <summary>
+/// This class handles business logic for file CRUD operations
+/// </summary>
 public class FileManager
 {
     private readonly ILogManager _logManager;

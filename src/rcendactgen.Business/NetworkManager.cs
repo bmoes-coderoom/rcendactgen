@@ -4,7 +4,9 @@ using rcendactgen.Common;
 using rcendactgen.Models;
 
 namespace rcendactgen.Business;
-
+/// <summary>
+/// NetworkManager business class to handle transmitting data
+/// </summary>
 public class NetworkManager
 {
     private readonly HttpClient _client;
