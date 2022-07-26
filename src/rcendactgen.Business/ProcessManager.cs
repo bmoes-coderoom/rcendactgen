@@ -2,7 +2,9 @@ using rcendactgen.Common;
 using rcendactgen.Models;
 
 namespace rcendactgen.Business;
-
+/// <summary>
+/// ProcessManager business class to build ProcessStartActivity Obj that gets passed to LogManager
+/// </summary>
 public class ProcessManager
 {
     private readonly ILogManager _logManager;

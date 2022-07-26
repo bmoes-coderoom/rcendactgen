@@ -1,7 +1,9 @@
 using Newtonsoft.Json;
 
 namespace rcendactgen.Common;
-
+/// <summary>
+/// Core Logging class
+/// </summary>
 public class Logger : ILogger
 {
     private static readonly string activityLogDir = $"{Globals.EXE_DIR}/activitylogs";

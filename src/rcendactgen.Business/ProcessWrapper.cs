@@ -2,7 +2,9 @@ using System.Diagnostics;
 using rcendactgen.Models;
 
 namespace rcendactgen.Business;
-
+/// <summary>
+/// Class for wrapping Process class static methods
+/// </summary>
 public class ProcessWrapper : IProcessWrapper
 {
     public ProcessWrapperModel Start(string command, string args)

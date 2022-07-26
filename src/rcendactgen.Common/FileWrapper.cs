@@ -1,5 +1,8 @@
 namespace rcendactgen.Common;
 
+/// <summary>
+/// Class to wrap File class static methods
+/// </summary>
 public class FileWrapper : IFileWrapper
 {
     public FileWrapObj Create(string path)

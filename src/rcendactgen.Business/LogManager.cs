@@ -3,7 +3,9 @@ using rcendactgen.Common;
 using rcendactgen.Models;
 
 namespace rcendactgen.Business;
-
+/// <summary>
+/// LogManager business class to handle the LogRecord ActivityLog object
+/// </summary>
 public class LogManager : ILogManager
 {
     private readonly ILogger _logger;
